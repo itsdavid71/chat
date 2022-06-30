@@ -1,25 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 // import { fetchCount } from "./counterAPI";
 import axios from "axios";
+import api from "../../helpers/api";
 
 const initialState = {
   chats: [],
 };
 
 export const getChats = createAsyncThunk("chats/getChats", async () => {
-  const response = await axios.get(
-    "https://inordic-messenger-api.herokuapp.com/chats"
-  );
+  const response = await api.get(`/chats`);
   return response.data;
 });
 
 export const addChat = createAsyncThunk("chats/addChat", async (title) => {
-  const response = await axios.post(
-    "https://inordic-messenger-api.herokuapp.com/chats",
-    {
-      title,
-    }
-  );
+  const response = await api.post(`/chats`, {
+    title,
+  });
   return response.data;
 });
 
