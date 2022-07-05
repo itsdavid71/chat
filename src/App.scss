@@ -1,0 +1,48 @@
+.chat-list {
+  margin: 20px 0;
+  .chat-button {
+    margin: 10px;
+    text-align: center;
+    width: 300px;
+    position: relative;
+    overflow: hidden;
+
+    a {
+      border: 1px solid rgba(153, 153, 153, 0.5);
+      padding-right: 50px;
+      border-radius: 0;
+    }
+    .chat-button-add {
+      background: rgb(81, 178, 76);
+    }
+    .chat-button-delete {
+      margin-left: 20px;
+      position: absolute;
+      right: -10px;
+      top: 0;
+      height: 100%;
+      bottom: 0;
+      background: rgb(242, 67, 67);
+      margin: auto;
+      border: none;
+      width: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 5px !important;
+      border-radius: 0;
+      color: #fff;
+      transition: 0.2s;
+      font-size: 12px !important;
+    }
+    &:hover {
+      .chat-button-delete {
+        width: 40px;
+        right: 0;
+      }
+    }
+    .active {
+      border-color: transparent;
+    }
+  }
+}

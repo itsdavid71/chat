@@ -19,6 +19,14 @@ export const addChat = createAsyncThunk("chats/addChat", async (title) => {
   return response.data;
 });
 
+export const deleteChat = createAsyncThunk("chats/deleteChat", async (chat) => {
+  await api.delete(`/chats/${chat}`, {
+    chat,
+  });
+  const response = await api.get(`/chats`);
+  return response.data;
+});
+
 export const chatsSlice = createSlice({
   name: "chats",
   initialState,
@@ -29,6 +37,9 @@ export const chatsSlice = createSlice({
     });
     builder.addCase(addChat.fulfilled, (state, action) => {
       state.chats.push(action.payload);
+    });
+    builder.addCase(deleteChat.fulfilled, (state, action) => {
+      state.chats = action.payload;
     });
   },
 });
