@@ -1,13 +1,59 @@
-.chat-button {
-  margin: 10px;
-  text-align: center;
-  width: 250px;
-  border: 1px solid rgba(153, 153, 153, 0.5);
-}
 .chat-list {
   margin: 20px 0;
 }
 
-.chat-button-add {
-  background: rgb(81, 178, 76);
+.chat-list .chat-button {
+  margin: 10px;
+  text-align: center;
+  width: 300px;
+  position: relative;
+  overflow: hidden;
 }
+
+.chat-list .chat-button a {
+  border: 1px solid rgba(153, 153, 153, 0.5);
+  padding-right: 50px;
+  border-radius: 0;
+}
+
+.chat-list .chat-button .chat-button-add {
+  background: #51b24c;
+}
+
+.chat-list .chat-button .chat-button-delete {
+  margin-left: 20px;
+  position: absolute;
+  right: -10px;
+  top: 0;
+  height: 100%;
+  bottom: 0;
+  background: #f24343;
+  margin: auto;
+  border: none;
+  width: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 5px !important;
+  border-radius: 0;
+  color: #fff;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  font-size: 12px !important;
+}
+
+.chat-list .chat-button:hover .chat-button-delete {
+  width: 40px;
+  right: 0;
+}
+
+.chat-list .chat-button .active {
+  border-color: transparent;
+}
+/*# sourceMappingURL=App.css.map */
