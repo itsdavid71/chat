@@ -29,12 +29,14 @@ function Chat() {
 
   console.log(messages);
 
-  const handleSubmit = ({ name, text, imageURL }) => {
+  const handleSubmit = ({ name, text, imageURL, location }) => {
+    console.log(location);
     const message = {
       chatId,
       name,
       text,
       imageURL,
+      location,
     };
     dispatch(submitMessage(message));
   };
