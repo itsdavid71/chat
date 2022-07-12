@@ -1,22 +1,37 @@
 import { useForm } from "react-hook-form";
+import { FormControl, Button } from "react-bootstrap";
 
 function MessageForm({ onSubmit }) {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const onFormSubmit = (data) => {
     onSubmit(data);
+    setValue("text", "");
+  };
+  const handleKeyDown = (event) => {
+    if (event.code === "Enter") {
+      handleSubmit(onFormSubmit)();
+    }
   };
   return (
     <form onSubmit={handleSubmit(onFormSubmit)}>
-      <div>
-        <input type="text" placeholder="Ваше имя" {...register("name")}></input>
+      <div className="mb-2">
+        <FormControl
+          type="text"
+          placeholder="Ваше имя"
+          {...register("name")}
+        ></FormControl>
       </div>
-      <div>
-        <textarea
+      <div className="mb-2">
+        <FormControl
+          as="textarea"
+          onKeyDown={handleKeyDown}
           placeholder="Текст сообщения"
           {...register("text")}
-        ></textarea>
+        ></FormControl>
       </div>
-      <button type="submit">Send</button>
+      <Button className="mb-2" variant="success" type="submit">
+        Send
+      </Button>
     </form>
   );
 }

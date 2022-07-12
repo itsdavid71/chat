@@ -3,7 +3,7 @@ function Message({ message }) {
   return (
     <Card className="mb-2">
       <Card.Header>
-        {message.name} / {message.createdAt}
+        {message.name} / {new Date(message.createdAt).toLocaleTimeString()}
       </Card.Header>
       <Card.Body>{message.text}</Card.Body>
     </Card>
