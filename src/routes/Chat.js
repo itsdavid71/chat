@@ -29,19 +29,20 @@ function Chat() {
 
   console.log(messages);
 
-  const handleSubmit = ({ name, text }) => {
+  const handleSubmit = ({ name, text, imageURL }) => {
     const message = {
       chatId,
       name,
       text,
+      imageURL,
     };
     dispatch(submitMessage(message));
   };
   return (
     <div>
       <h1>Чат {chatId}</h1>
+      <MessageForm onSubmit={handleSubmit} />
       <SMessages ref={messagesRef}>
-        <MessageForm onSubmit={handleSubmit} />
         {messages.map((message) => (
           <Message key={message._id} message={message} />
         ))}
