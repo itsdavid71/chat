@@ -1,16 +1,26 @@
 import { useForm } from "react-hook-form";
 import { FormControl, Button } from "react-bootstrap";
 import FileUpload from "../../components/FileUpload";
+import PropTypes from "prop-types";
 import Location from "../../components/Location";
+import Alert from "react-bootstrap/Alert";
 
 function MessageForm({ onSubmit }) {
-  const { register, handleSubmit, setValue, watch } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm();
   const location = watch("location");
+  const imageURL = watch("imageURL");
 
   const onFormSubmit = (data) => {
     onSubmit(data);
     setValue("text", "");
     setValue("location", null);
+    setValue("imageURL", "");
   };
   const handleKeyDown = (event) => {
     if (event.code === "Enter") {
@@ -29,18 +39,38 @@ function MessageForm({ onSubmit }) {
   return (
     <form onSubmit={handleSubmit(onFormSubmit)}>
       <div className="mb-2">
-        <FormControl type="text" placeholder="Ваше имя" {...register("name")} />
+        <FormControl
+          type="text"
+          placeholder="Ваше имя"
+          {...register("name", { required: true, maxLength: 20 })}
+        />
       </div>
+      {errors.name?.type === "required" && (
+        <Alert className="mt-2" variant={"danger"}>
+          Имя не может быть пустым
+        </Alert>
+      )}
       <div className="mb-2">
         <FormControl
           as="textarea"
           placeholder="Текст сообщения"
           onKeyDown={handleKeyDown}
-          {...register("text")}
+          {...register("text", { required: true, maxLength: 200 })}
         />
+        {errors.text?.type === "required" && (
+          <Alert className="mt-2" variant={"danger"}>
+            Сообщение не может быть пустым
+          </Alert>
+        )}
+
+        {/* {errors.requiredField && <span>This field is required</span>} */}
       </div>
       <div className="mb-2">
-        <FileUpload onUpload={handleImageSubmit} {...register("imageURL")} />
+        <FileUpload
+          onUpload={handleImageSubmit}
+          value={imageURL}
+          {...register("imageURL")}
+        />
       </div>
       <div className="mb-2">
         <Location
@@ -49,9 +79,14 @@ function MessageForm({ onSubmit }) {
           value={location}
         />
       </div>
-      <Button type="submit">Send</Button>
+      <Button className="mb-3" type="submit">
+        Send
+      </Button>
     </form>
   );
 }
 
+MessageForm.propType = {
+  onSubmit: PropTypes.func.isRequired,
+};
 export default MessageForm;

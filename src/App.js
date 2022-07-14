@@ -5,12 +5,14 @@ import Chats from "./routes/Chats";
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { Container } from "react-bootstrap";
 import Chat from "./routes/Chat";
+import Main from "./routes/Main";
 
 function App() {
   return (
     <Wrapper apiKey="AIzaSyBEWfYnG7bYhE2NUEvCyKs5j_2-a4LGmgE">
       <Container>
         <Routes>
+          <Route path="/" element={<Main />} />
           <Route path="chats" element={<Chats />}>
             <Route path=":chatId" element={<Chat />}></Route>
           </Route>
