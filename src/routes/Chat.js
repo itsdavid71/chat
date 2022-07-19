@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   getMessages,
   selectMessages,
@@ -13,6 +14,7 @@ import {
 import Message from "../features/chats/Message";
 import MessageForm from "../features/chats/MessageForm";
 function Chat() {
+  const { user, isAuthenticated } = useAuth0();
   const { chatId } = useParams();
   const dispatch = useDispatch();
   const messages = useSelector(selectMessages);
@@ -27,23 +29,26 @@ function Chat() {
     messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
   }, [messages]);
 
-  console.log(messages);
-
-  const handleSubmit = ({ name, text, imageURL, location }) => {
-    console.log(location);
-    const message = {
-      chatId,
-      name,
-      text,
-      imageURL,
-      location,
-    };
-    dispatch(submitMessage(message));
+  const handleSubmit = ({ text, imageURL, location }) => {
+    if (user) {
+      const message = {
+        chatId,
+        name: user.name,
+        text,
+        imageURL,
+        location,
+      };
+      dispatch(submitMessage(message));
+    }
   };
   return (
     <div>
       <h1>Чат {chatId}</h1>
-      <MessageForm onSubmit={handleSubmit} />
+      {isAuthenticated ? (
+        <MessageForm onSubmit={handleSubmit} />
+      ) : (
+        <p>Для отправки сообщений авторизуйтесь</p>
+      )}
       <SMessages ref={messagesRef}>
         {messages.map((message) => (
           <Message key={message._id} message={message} />

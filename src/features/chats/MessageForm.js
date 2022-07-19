@@ -40,18 +40,6 @@ function MessageForm({ onSubmit }) {
     <form onSubmit={handleSubmit(onFormSubmit)}>
       <div className="mb-2">
         <FormControl
-          type="text"
-          placeholder="Ваше имя"
-          {...register("name", { required: true, maxLength: 20 })}
-        />
-      </div>
-      {errors.name?.type === "required" && (
-        <Alert className="mt-2" variant={"danger"}>
-          Имя не может быть пустым
-        </Alert>
-      )}
-      <div className="mb-2">
-        <FormControl
           as="textarea"
           placeholder="Текст сообщения"
           onKeyDown={handleKeyDown}
